@@ -12,9 +12,9 @@ const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps, modelValue } = useFormItemComponentProps<
   TMode,
   TData,
-  'input'
+  'inputTag'
 >(props)
 </script>
 <template>
-  <el-input v-model="modelValue" v-bind="currentProps"> </el-input>
+  <el-input-tag v-model="modelValue" v-bind="currentProps"> </el-input-tag>
 </template>

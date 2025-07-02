@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -29,6 +29,6 @@
     "vue-tsc": "^2.2.10"
   },
   "volta": {
-    "node": "16.20.2"
+    "node": "20.18.0"
   }
 }

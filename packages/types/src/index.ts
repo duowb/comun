@@ -50,16 +50,24 @@ export type ConfigColumn<TMode extends string> = BaseColumn &
 
 export type Mode = SmartLiteral<'edit' | 'view'>
 
-export interface HelperParams<TData, TItem, TMode> {
+export interface HelperParams<TData, TConfig, TColumn, TMode> {
   data: TData
-  item: TItem
+  config: TConfig
+  column: TColumn | null
   mode: TMode
 }
-export interface HelperFunction<TData, TItem, TMode, TValue> {
-  (params: HelperParams<TData, TItem, TMode>): TValue
+export interface HelperFunction<TData, TConfig, TColumn, TMode, TValue> {
+  (params: HelperParams<TData, TConfig, TColumn, TMode>): TValue
 }
 
-/** 可能是方法，也可能是值 */
-export type ValueOrFunction<TData, TItem, TMode, TValue> =
-  | HelperFunction<TData, TItem, TMode, TValue>
+/**
+ * 值或函数类型
+ * TData: 表单数据类型
+ * TConfig: 表单配置类型
+ * TColumn: 表单列类型
+ * TMode: 表单模式类型
+ * TValue: 值类型
+ */
+export type ValueOrFunction<TData, TConfig, TColumn, TMode, TValue> =
+  | HelperFunction<TData, TConfig, TColumn, TMode, TValue>
   | TValue

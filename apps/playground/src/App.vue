@@ -7,10 +7,10 @@
       <template #header>
         <div class="card-header">
           <span>CForm 组件演示 (v-model 模式)</span>
-          <el-radio-group v-model="formMode">
-            <el-radio-button label="edit">编辑模式</el-radio-button>
-            <el-radio-button label="view">查看模式</el-radio-button>
-            <el-radio-button label="review">复核模式</el-radio-button>
+          <el-radio-group v-model="formMode" @change="modeChange">
+            <el-radio-button value="edit">编辑模式</el-radio-button>
+            <el-radio-button value="view">查看模式</el-radio-button>
+            <el-radio-button value="review">复核模式</el-radio-button>
           </el-radio-group>
         </div>
       </template>
@@ -30,7 +30,7 @@
 import { ref, reactive } from 'vue'
 
 import { Form } from '@comun-ui/form'
-import type { CFormConfig, CFormInstance } from '@comun-ui/form'
+import type { CFormConfig } from '@comun-ui/form'
 import type { FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
@@ -43,8 +43,9 @@ interface MyFormData {
   reviewComment: string
 }
 
-const cFormRef = ref<CFormInstance | null>(null)
-const formMode = ref<'edit' | 'view' | 'review'>('edit')
+const cFormRef = ref(null)
+type Mode = 'edit' | 'view' | 'review'
+const formMode = ref<Mode>('edit')
 
 const formData = reactive<MyFormData>({
   taskName: '发布 ComposeUI v1.0',
@@ -62,7 +63,7 @@ const formRules: Record<keyof MyFormData, FormItemRule[]> = {
   isUrgent: [],
 }
 
-const config: CFormConfig<MyFormData, 'edit' | 'view' | 'review'> = {
+const config = ref<CFormConfig<MyFormData, Mode>>({
   mode: 'edit',
   formProps: {
     labelWidth: '120px',
@@ -70,14 +71,23 @@ const config: CFormConfig<MyFormData, 'edit' | 'view' | 'review'> = {
     disabled: ({ mode }) => mode === 'view' || mode === 'review',
     showMessage: true,
   },
-  items: [
+  columns: [
     {
+      show: true,
       type: 'input',
       prop: 'taskName',
-      label: '任务名称',
+      formItemProps: ({ mode }) => {
+        return {
+          label: mode === 'edit' ? '任务名称' : '查看任务名称',
+        }
+      },
       props: { placeholder: '请输入任务名称', disabled: ({ mode }) => mode === 'review' }, // 在复核模式下禁用 },
     },
   ],
+})
+
+const modeChange = (mode: Mode) => {
+  config.value.mode = mode;
 }
 
 const submitForm = () => {

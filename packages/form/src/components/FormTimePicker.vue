@@ -12,9 +12,9 @@ const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps, modelValue } = useFormItemComponentProps<
   TMode,
   TData,
-  'input'
+  'timePicker'
 >(props)
 </script>
 <template>
-  <el-input v-model="modelValue" v-bind="currentProps"> </el-input>
+  <el-rate v-model="modelValue" v-bind="currentProps"> </el-rate>
 </template>
