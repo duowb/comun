@@ -20,12 +20,20 @@ import type {
 } from './types' // 导入更新后的类型
 import type { HelperFunction, Mode } from '@comun-ui/types'
 import FormInput from './components/FormInput.vue'
-import FormSelect from './components/FormInput.vue'
-import FormDatePicker from './components/FormInput.vue'
-import FormSwitch from './components/FormInput.vue'
-import FormCheckbox from './components/FormInput.vue'
-import FormRadio from './components/FormInput.vue'
-import formText from './components/FormInput.vue'
+import FormSelect from './components/FormSelect.vue'
+import FormDatePicker from './components/FormDatePicker.vue'
+import FormSwitch from './components/FormSwitch.vue'
+import FormCheckbox from './components/FormCheckbox.vue'
+import FormRadio from './components/FormRadio.vue'
+import FormText from './components/FormText.vue'
+import FormInputTag from './components/FormInputTag.vue'
+import FormMention from './components/FormMention.vue'
+import FormNumber from './components/FormNumber.vue'
+import FormRate from './components/FormRate.vue'
+import FormSlider from './components/FormSlider.vue'
+import FormTimePicker from './components/FormTimePicker.vue'
+import FormTimeSelect from './components/FormTimeSelect.vue'
+import FormTreeSelect from './components/FormTreeSelect.vue'
 
 const props = defineProps<CFormProps<TData, TMode>>()
 const formModel = defineModel<TData>({
@@ -40,7 +48,15 @@ const internalComponents = shallowRef({
   switch: FormSwitch,
   checkbox: FormCheckbox,
   radio: FormRadio,
-  text: formText,
+  text: FormText,
+  inputTag: FormInputTag,
+  mention: FormMention,
+  number: FormNumber,
+  rate: FormRate,
+  slider: FormSlider,
+  timePicker: FormTimePicker,
+  timeSelect: FormTimeSelect,
+  treeSelect: FormTreeSelect,
 })
 
 const currentConfig = computed(() => props.config)

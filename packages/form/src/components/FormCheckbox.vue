@@ -10,8 +10,15 @@ import {
 } from '../composables/useFormItem'
 import { computed } from 'vue'
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
-const { currentProps, currentPropsOptions, modelValue } =
-  useFormItemComponentProps<TMode, TData, 'checkbox'>(props)
+const { currentProps, currentPropsOptions } = useFormItemComponentProps<
+  TMode,
+  TData,
+  'checkbox'
+>(props)
+
+const modelValue = defineModel<any>({
+  default: '',
+})
 
 const type = computed(() => currentProps.value?.checkboxType || 'checkbox')
 </script>

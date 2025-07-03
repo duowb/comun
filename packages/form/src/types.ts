@@ -50,7 +50,7 @@ export type BaseOption = {
   disabled?: boolean
 }
 
-export type RadioOption = BaseOption & RadioProps
+export type RadioOption = BaseOption & RecursiveOptional<RadioProps>
 
 export type InternalComponents<TData, TConfig, TColumn, TMode, TValue = any> = {
   checkbox: FormatterEleProps<
@@ -60,7 +60,7 @@ export type InternalComponents<TData, TConfig, TColumn, TMode, TValue = any> = {
     TMode,
     TValue,
     CheckboxGroupProps
-  > & { option?: BaseOption[]; checkboxType?: 'button' | 'checkbox' }
+  > & { options?: BaseOption[]; checkboxType?: 'button' | 'checkbox' }
   datePicker: FormatterEleProps<
     TData,
     TConfig,
@@ -84,8 +84,9 @@ export type InternalComponents<TData, TConfig, TColumn, TMode, TValue = any> = {
     TColumn,
     TMode,
     TValue,
-    MentionProps
-  >
+    MentionProps,
+    'modelValue' | 'disabled' | 'options'
+  > & { options?: BaseOption[] }
   // TODO 支持单位?
   number: FormatterEleProps<
     TData,
@@ -102,7 +103,7 @@ export type InternalComponents<TData, TConfig, TColumn, TMode, TValue = any> = {
     TMode,
     TValue,
     RadioGroupProps
-  > & { option?: RadioOption[]; radioType?: 'button' | 'radio' }
+  > & { options?: RadioOption[]; radioType?: 'button' | 'radio' }
   rate: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, RateProps>
   select: FormatterEleProps<
     TData,
@@ -110,8 +111,9 @@ export type InternalComponents<TData, TConfig, TColumn, TMode, TValue = any> = {
     TColumn,
     TMode,
     TValue,
-    SelectProps
-  > & { option?: BaseOption[]; selectType: 'selectV2' | 'select' }
+    SelectProps,
+    'modelValue' | 'disabled' | 'options'
+  > & { options?: BaseOption[]; selectType: 'selectV2' | 'select' }
   slider: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, SliderProps>
   switch: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, SwitchProps>
   text: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, TextProps>

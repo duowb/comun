@@ -9,11 +9,16 @@ import {
   useFormItemComponentProps,
 } from '../composables/useFormItem'
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
-const { currentProps, modelValue } = useFormItemComponentProps<
+const { currentProps } = useFormItemComponentProps<
   TMode,
   TData,
   'text'
 >(props)
+
+const modelValue = defineModel<any>({
+  default: '',
+})
+
 </script>
 <template>
   <el-text v-bind="currentProps"> {{ modelValue }} </el-text>

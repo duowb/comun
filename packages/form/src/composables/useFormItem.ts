@@ -4,7 +4,7 @@ import type {
   DynamicColumn,
   InternalComponents,
 } from '../types'
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 
 export type FormItemComponentProps<
   TMode extends Mode,
@@ -29,10 +29,6 @@ export function useFormItemComponentProps<
   TType extends keysFormItemComponents,
 >(props: FormItemComponentProps<TMode, TData>) {
   const currentMode = computed(() => props.config?.mode || ('edit' as TMode))
-
-  const modelValue = defineModel<any>({
-    default: '',
-  })
 
   function getDisabled(
     disabled?: ValueOrFunction<
@@ -70,17 +66,17 @@ export function useFormItemComponentProps<
   })
 
   const currentPropsOptions = computed(() => {
-    if (!currentProps.value) return []
-    if ('option' in currentProps.value) {
-      return currentProps.value.option
+    const unCurrentProps = unref(currentProps.value)
+    if (!unCurrentProps) return []
+    if ('options' in unCurrentProps) {
+      return unCurrentProps.options || []
     }
     return []
   })
 
   return {
-    modelValue,
     currentMode,
     currentProps,
-    currentPropsOptions
+    currentPropsOptions,
   }
 }

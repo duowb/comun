@@ -10,8 +10,13 @@ import {
 } from '../composables/useFormItem'
 import { computed } from 'vue'
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
-const { currentProps, currentPropsOptions, modelValue } =
+const { currentProps, currentPropsOptions } =
   useFormItemComponentProps<TMode, TData, 'select'>(props)
+  
+const modelValue = defineModel<any>({
+  default: '',
+})
+
 const selectType = computed(() => currentProps.value?.selectType || 'select')
 </script>
 <template>
