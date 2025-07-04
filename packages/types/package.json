@@ -5,7 +5,10 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "peerDependencies": {
-    "element-plus": ">=2.7.0",
-    "vue": ">=3.4.0"
+    "element-plus": "catalog:components",
+    "vue": "catalog:components"
+  },
+  "volta": {
+    "extends": "../../package.json"
   }
 }

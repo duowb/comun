@@ -1,108 +1,9 @@
-<template>
-  <div class="app-container">
-    <h1 class="section-title">ComunUI Form Playground</h1>
-    <p class="section-description">全面展示 @comun-ui/form 组件的各种使用场景和功能特性</p>
-
-    <!-- 基础表单演示 -->
-    <el-card class="demo-card">
-      <template #header>
-        <div class="card-header">
-          <span>基础表单演示</span>
-          <el-radio-group v-model="basicFormMode" @change="onBasicModeChange">
-            <el-radio-button value="edit">编辑模式</el-radio-button>
-            <el-radio-button value="view">查看模式</el-radio-button>
-            <el-radio-button value="review">复核模式</el-radio-button>
-          </el-radio-group>
-        </div>
-      </template>
-
-      <Form ref="basicFormRef" v-model="basicFormData" :config="basicConfig" />
-
-      <div class="form-actions">
-        <el-button type="primary" @click="submitBasicForm">提交</el-button>
-        <el-button @click="resetBasicForm">重置</el-button>
-        <el-button @click="validateBasicForm">验证</el-button>
-      </div>
-
-      <el-divider />
-      <h4>表单数据:</h4>
-      <pre class="data-preview">{{ JSON.stringify(basicFormData, null, 2) }}</pre>
-    </el-card>
-
-    <!-- 所有组件类型演示 -->
-    <el-card class="demo-card">
-      <template #header>
-        <div class="card-header">
-          <span>所有组件类型演示</span>
-          <el-radio-group v-model="allComponentsMode" @change="onAllComponentsModeChange">
-            <el-radio-button value="edit">编辑模式</el-radio-button>
-            <el-radio-button value="view">查看模式</el-radio-button>
-          </el-radio-group>
-        </div>
-      </template>
-
-      <Form ref="allComponentsFormRef" v-model="allComponentsData" :config="allComponentsConfig" />
-
-      <div class="form-actions">
-        <el-button type="primary" @click="submitAllComponentsForm">提交</el-button>
-        <el-button @click="resetAllComponentsForm">重置</el-button>
-      </div>
-
-      <el-divider />
-      <h4>表单数据:</h4>
-      <pre class="data-preview">{{ JSON.stringify(allComponentsData, null, 2) }}</pre>
-    </el-card>
-
-    <!-- 动态表单演示 -->
-    <el-card class="demo-card">
-      <template #header>
-        <div class="card-header">
-          <span>动态表单演示</span>
-          <el-button @click="addDynamicField">添加字段</el-button>
-          <el-button @click="removeDynamicField">移除字段</el-button>
-        </div>
-      </template>
-
-      <Form ref="dynamicFormRef" v-model="dynamicFormData" :config="dynamicConfig" />
-
-      <div class="form-actions">
-        <el-button type="primary" @click="submitDynamicForm">提交</el-button>
-        <el-button @click="resetDynamicForm">重置</el-button>
-      </div>
-
-      <el-divider />
-      <h4>表单数据:</h4>
-      <pre class="data-preview">{{ JSON.stringify(dynamicFormData, null, 2) }}</pre>
-    </el-card>
-
-    <!-- 条件显示演示 -->
-    <el-card class="demo-card">
-      <template #header>
-        <div class="card-header">
-          <span>条件显示演示</span>
-        </div>
-      </template>
-
-      <Form ref="conditionalFormRef" v-model="conditionalFormData" :config="conditionalConfig" />
-
-      <div class="form-actions">
-        <el-button type="primary" @click="submitConditionalForm">提交</el-button>
-        <el-button @click="resetConditionalForm">重置</el-button>
-      </div>
-
-      <el-divider />
-      <h4>表单数据:</h4>
-      <pre class="data-preview">{{ JSON.stringify(conditionalFormData, null, 2) }}</pre>
-    </el-card>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
 import { Form } from '@comun-ui/form'
-import type { CFormConfig, Column } from '@comun-ui/form'
-import type { FormItemRule, FormInstance } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { reactive, ref } from 'vue'
+import type { CFormConfig, LocalColumn } from '@comun-ui/form'
+import type { FormInstance, FormItemRule } from 'element-plus'
 
 type Mode = 'edit' | 'view' | 'review'
 
@@ -122,7 +23,9 @@ const basicFormMode = ref<Mode>('edit')
 const basicFormData = reactive<BasicFormData>({
   taskName: '发布 ComunUI v1.0',
   assignee: 'alice',
-  deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split('T')[0],
   isUrgent: true,
   reviewComment: '',
   priority: 'high',
@@ -224,7 +127,8 @@ const basicConfig = ref<CFormConfig<BasicFormData, Mode>>({
       },
     },
     {
-      show: ({ mode, data }) => mode === 'review' || (mode === 'edit' && data.isUrgent),
+      show: ({ mode, data }) =>
+        mode === 'review' || (mode === 'edit' && data.isUrgent),
       type: 'input',
       prop: 'reviewComment',
       span: { span: 24 },
@@ -253,7 +157,7 @@ const submitBasicForm = async () => {
     await basicFormRef.value?.validate()
     ElMessage.success('表单验证通过！')
     console.log('基础表单数据:', basicFormData)
-  } catch (error) {
+  } catch {
     ElMessage.error('表单验证失败，请检查输入')
   }
 }
@@ -267,7 +171,7 @@ const validateBasicForm = async () => {
   try {
     await basicFormRef.value?.validate()
     ElMessage.success('表单验证通过！')
-  } catch (error) {
+  } catch {
     ElMessage.error('表单验证失败')
   }
 }
@@ -319,7 +223,9 @@ const allComponentsData = reactive<AllComponentsData>({
   textDisplay: '这是只读文本显示',
 })
 
-const allComponentsConfig = ref<CFormConfig<AllComponentsData, 'edit' | 'view'>>({
+const allComponentsConfig = ref<
+  CFormConfig<AllComponentsData, 'edit' | 'view'>
+>({
   mode: allComponentsMode.value,
   formProps: {
     labelWidth: '140px',
@@ -462,7 +368,7 @@ const dynamicConfig = ref<CFormConfig<DynamicFormData, 'edit'>>({
 
 // 更新动态配置的函数
 const updateDynamicConfig = () => {
-  const baseColumns: Column<DynamicFormData, 'edit'>[] = [
+  const baseColumns: LocalColumn<DynamicFormData, 'edit'>[] = [
     {
       show: true,
       type: 'input',
@@ -480,7 +386,7 @@ const updateDynamicConfig = () => {
   ]
 
   // 添加动态字段
-  const dynamicColumns: Column<DynamicFormData, 'edit'>[] = []
+  const dynamicColumns: LocalColumn<DynamicFormData, 'edit'>[] = []
   for (let i = 1; i <= dynamicFieldCount.value; i++) {
     dynamicColumns.push({
       show: true,
@@ -647,6 +553,134 @@ const resetConditionalForm = () => {
   ElMessage.info('条件显示表单已重置')
 }
 </script>
+
+<template>
+  <div class="app-container">
+    <h1 class="section-title">ComunUI Form Playground</h1>
+    <p class="section-description">
+      全面展示 @comun-ui/form 组件的各种使用场景和功能特性
+    </p>
+
+    <!-- 基础表单演示 -->
+    <el-card class="demo-card">
+      <template #header>
+        <div class="card-header">
+          <span>基础表单演示</span>
+          <el-radio-group v-model="basicFormMode" @change="onBasicModeChange">
+            <el-radio-button value="edit">编辑模式</el-radio-button>
+            <el-radio-button value="view">查看模式</el-radio-button>
+            <el-radio-button value="review">复核模式</el-radio-button>
+          </el-radio-group>
+        </div>
+      </template>
+
+      <Form ref="basicFormRef" v-model="basicFormData" :config="basicConfig" />
+
+      <div class="form-actions">
+        <el-button type="primary" @click="submitBasicForm">提交</el-button>
+        <el-button @click="resetBasicForm">重置</el-button>
+        <el-button @click="validateBasicForm">验证</el-button>
+      </div>
+
+      <el-divider />
+      <h4>表单数据:</h4>
+      <pre class="data-preview">{{
+        JSON.stringify(basicFormData, null, 2)
+      }}</pre>
+    </el-card>
+
+    <!-- 所有组件类型演示 -->
+    <el-card class="demo-card">
+      <template #header>
+        <div class="card-header">
+          <span>所有组件类型演示</span>
+          <el-radio-group
+            v-model="allComponentsMode"
+            @change="onAllComponentsModeChange"
+          >
+            <el-radio-button value="edit">编辑模式</el-radio-button>
+            <el-radio-button value="view">查看模式</el-radio-button>
+          </el-radio-group>
+        </div>
+      </template>
+
+      <Form
+        ref="allComponentsFormRef"
+        v-model="allComponentsData"
+        :config="allComponentsConfig"
+      />
+
+      <div class="form-actions">
+        <el-button type="primary" @click="submitAllComponentsForm"
+          >提交</el-button
+        >
+        <el-button @click="resetAllComponentsForm">重置</el-button>
+      </div>
+
+      <el-divider />
+      <h4>表单数据:</h4>
+      <pre class="data-preview">{{
+        JSON.stringify(allComponentsData, null, 2)
+      }}</pre>
+    </el-card>
+
+    <!-- 动态表单演示 -->
+    <el-card class="demo-card">
+      <template #header>
+        <div class="card-header">
+          <span>动态表单演示</span>
+          <el-button @click="addDynamicField">添加字段</el-button>
+          <el-button @click="removeDynamicField">移除字段</el-button>
+        </div>
+      </template>
+
+      <Form
+        ref="dynamicFormRef"
+        v-model="dynamicFormData"
+        :config="dynamicConfig"
+      />
+
+      <div class="form-actions">
+        <el-button type="primary" @click="submitDynamicForm">提交</el-button>
+        <el-button @click="resetDynamicForm">重置</el-button>
+      </div>
+
+      <el-divider />
+      <h4>表单数据:</h4>
+      <pre class="data-preview">{{
+        JSON.stringify(dynamicFormData, null, 2)
+      }}</pre>
+    </el-card>
+
+    <!-- 条件显示演示 -->
+    <el-card class="demo-card">
+      <template #header>
+        <div class="card-header">
+          <span>条件显示演示</span>
+        </div>
+      </template>
+
+      <Form
+        ref="conditionalFormRef"
+        v-model="conditionalFormData"
+        :config="conditionalConfig"
+      />
+
+      <div class="form-actions">
+        <el-button type="primary" @click="submitConditionalForm"
+          >提交</el-button
+        >
+        <el-button @click="resetConditionalForm">重置</el-button>
+      </div>
+
+      <el-divider />
+      <h4>表单数据:</h4>
+      <pre class="data-preview">{{
+        JSON.stringify(conditionalFormData, null, 2)
+      }}</pre>
+    </el-card>
+  </div>
+</template>
 
 <style scoped>
 .app-container {

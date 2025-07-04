@@ -3,23 +3,26 @@
   lang="ts"
   generic="TData extends Record<string, any>, TMode extends Mode"
 >
-import type { Mode } from '@comun-ui/types'
-import {
-  type FormItemComponentProps,
-  useFormItemComponentProps,
-} from '../composables/useFormItem'
 import { computed } from 'vue'
+import {
+  useFormItemComponentProps,
+  type FormItemComponentProps,
+} from '../composables/useFormItem'
+import type { Mode } from '../types'
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
-const { currentProps, currentPropsOptions } =
-  useFormItemComponentProps<TMode, TData, 'radio'>(props)
-  
+const { currentProps, currentPropsOptions } = useFormItemComponentProps<
+  TMode,
+  TData,
+  'radio'
+>(props)
+
 const modelValue = defineModel<any>({
   default: '',
 })
 
-
 const type = computed(() => currentProps.value?.radioType || 'radio')
 </script>
+
 <template>
   <el-radio-group v-model="modelValue" v-bind="currentProps">
     <template v-if="type === 'button'">

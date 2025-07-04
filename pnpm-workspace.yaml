@@ -1,3 +1,24 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+
+catalog:
+  '@tsconfig/node22': ^22.0.2
+  '@types/node': ^22.15.32
+  '@vitejs/plugin-vue': ^6.0.0
+  '@vue/tsconfig': ^0.7.0
+  npm-run-all2: ^8.0.4
+  vite-plugin-vue-devtools: ^7.7.7
+catalogs:
+  cli:
+    '@sxzz/eslint-config': ^7.0.4
+    '@sxzz/prettier-config': ^2.2.1
+    '@typescript/native-preview': latest
+    eslint: ^9.30.1
+    prettier: ^3.6.0
+    typescript: ~5.8.3
+    vite: ^7.0.0
+    vue-tsc: ^3.0.1
+  components:
+    element-plus: ^2.7.4
+    vue: ^3.5.17

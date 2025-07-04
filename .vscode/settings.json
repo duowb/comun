@@ -1,6 +1,10 @@
 {
   "cSpell.words": [
     "comun",
+    "sxzz",
+    "unocss",
+    "vite"
   ],
   "cSpell.ignorePaths": ["pnpm-lock.yaml"],
+  "typescript.tsdk": "node_modules/typescript/lib",
 }

@@ -1,4 +1,4 @@
-import Form from './index.vue';
+import Form from './index.vue'
 
-export * from './types';
-export { Form };
+export * from './types'
+export { Form }

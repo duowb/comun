@@ -1,48 +1,70 @@
-import type { Mode, RecursiveOptional, ValueOrFunction } from '@comun-ui/types'
+import type { Obj, RecursiveOptional, SmartLiteral } from '@comun-ui/types'
 import type {
-  InputProps,
-  SelectProps,
-  DatePickerProps,
-  SwitchProps,
   CheckboxGroupProps,
-  RadioGroupProps,
-  FormProps,
-  FormItemProps,
-  RowProps,
   ColProps,
-  TextProps,
-  RadioProps,
+  DatePickerProps,
+  FormItemProps,
+  FormProps,
   InputNumberProps,
+  InputProps,
   InputTagProps,
   MentionProps,
-  TreeComponentProps,
+  RadioGroupProps,
+  RadioProps,
   RateProps,
+  RowProps,
+  SelectProps,
+  SliderProps,
+  SwitchProps,
+  TextProps,
   TimePickerDefaultProps,
   TimeSelectProps,
-  SliderProps,
+  TreeComponentProps,
 } from 'element-plus'
 import type { Component } from 'vue'
 
-type Common = {
-  class?: string | string[]
-  style?: string | Record<string, string>
+export type Mode = SmartLiteral<'edit' | 'view'>
+
+// 简化的基础上下文类型
+export type FormFunctionParams<TData, TMode extends Mode> = {
+  data: TData
+  config: CFormConfig<TData, TMode>
+  column: DynamicColumn<TData, TMode> | null
+  mode: TMode
 }
 
-export type ColumnCommonProps<TData, TConfig, TColumn, TMode, TValue = any> = {
-  disabled?: ValueOrFunction<TData, TConfig, TColumn, TMode, boolean>
-  formatter?: ValueOrFunction<TData, TConfig, TColumn, TMode, TValue>
+/**
+ * 值或函数类型
+ * TData: 表单数据类型
+ * TMode: 表单模式类型
+ * TValue: 值类型
+ */
+export type ValueOrFunction<TData, TMode extends Mode, TValue> =
+  | ((params: FormFunctionParams<TData, TMode>) => TValue)
+  | TValue
+
+export type DisabledValue<TData, TMode extends Mode> = ValueOrFunction<
+  TData,
+  TMode,
+  boolean
+>
+
+type Common = {
+  class?: string | string[]
+  style?: string | Obj<string>
+}
+
+export type ColumnCommonProps<TData, TMode extends Mode> = {
+  disabled?: DisabledValue<TData, TMode>
+  formatter?: ValueOrFunction<TData, TMode, any>
 } & Common
 
 type FormatterEleProps<
   TData,
-  TConfig,
-  TColumn,
-  TMode,
-  TValue,
+  TMode extends Mode,
   TEle,
   KValues extends keyof any = 'modelValue' | 'disabled',
-> = RecursiveOptional<Omit<TEle, KValues>> &
-  ColumnCommonProps<TData, TConfig, TColumn, TMode, TValue>
+> = RecursiveOptional<Omit<TEle, KValues>> & ColumnCommonProps<TData, TMode>
 
 export type BaseOption = {
   label: string | number | boolean
@@ -52,196 +74,106 @@ export type BaseOption = {
 
 export type RadioOption = BaseOption & RecursiveOptional<RadioProps>
 
-export type InternalComponents<TData, TConfig, TColumn, TMode, TValue = any> = {
-  checkbox: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    CheckboxGroupProps
-  > & { options?: BaseOption[]; checkboxType?: 'button' | 'checkbox' }
-  datePicker: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    DatePickerProps
-  >
-  input: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, InputProps>
-  inputTag: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    InputTagProps
-  >
+export type InternalComponents<TData, TMode extends Mode> = {
+  checkbox: FormatterEleProps<TData, TMode, CheckboxGroupProps> & {
+    options?: BaseOption[]
+    checkboxType?: 'button' | 'checkbox'
+  }
+  datePicker: FormatterEleProps<TData, TMode, DatePickerProps>
+  input: FormatterEleProps<TData, TMode, InputProps>
+  inputTag: FormatterEleProps<TData, TMode, InputTagProps>
   mention: FormatterEleProps<
     TData,
-    TConfig,
-    TColumn,
     TMode,
-    TValue,
     MentionProps,
     'modelValue' | 'disabled' | 'options'
   > & { options?: BaseOption[] }
   // TODO 支持单位?
-  number: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    InputNumberProps
-  >
-  radio: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    RadioGroupProps
-  > & { options?: RadioOption[]; radioType?: 'button' | 'radio' }
-  rate: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, RateProps>
+  number: FormatterEleProps<TData, TMode, InputNumberProps>
+  radio: FormatterEleProps<TData, TMode, RadioGroupProps> & {
+    options?: RadioOption[]
+    radioType?: 'button' | 'radio'
+  }
+  rate: FormatterEleProps<TData, TMode, RateProps>
   select: FormatterEleProps<
     TData,
-    TConfig,
-    TColumn,
     TMode,
-    TValue,
     SelectProps,
     'modelValue' | 'disabled' | 'options'
   > & { options?: BaseOption[]; selectType: 'selectV2' | 'select' }
-  slider: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, SliderProps>
-  switch: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, SwitchProps>
-  text: FormatterEleProps<TData, TConfig, TColumn, TMode, TValue, TextProps>
-  timePicker: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    TimePickerDefaultProps
-  >
-  timeSelect: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    TimeSelectProps
-  >
-  treeSelect: FormatterEleProps<
-    TData,
-    TConfig,
-    TColumn,
-    TMode,
-    TValue,
-    SelectProps
-  > &
-    FormatterEleProps<
-      TData,
-      TConfig,
-      TColumn,
-      TMode,
-      TValue,
-      TreeComponentProps
-    >
-  component: Record<string, any>
+  slider: FormatterEleProps<TData, TMode, SliderProps>
+  switch: FormatterEleProps<TData, TMode, SwitchProps>
+  text: FormatterEleProps<TData, TMode, TextProps>
+  timePicker: FormatterEleProps<TData, TMode, TimePickerDefaultProps>
+  timeSelect: FormatterEleProps<TData, TMode, TimeSelectProps>
+  treeSelect: FormatterEleProps<TData, TMode, SelectProps> &
+    FormatterEleProps<TData, TMode, TreeComponentProps>
+  component: Obj
 }
-
-export type InternalComponentsKey = keyof InternalComponents<any, any, any, any>
+export type InternalComponentsKey = keyof InternalComponents<any, any>
 
 // 根据组件类型获取对应的Props类型
 type GetPropsType<
-  T extends keyof InternalComponents<TData, TConfig, TColumn, TMode>,
+  T extends keyof InternalComponents<TData, TMode>,
   TData,
-  TConfig,
-  TColumn,
-  TMode,
-> = InternalComponents<TData, TConfig, TColumn, TMode>[T]
+  TMode extends Mode,
+> = InternalComponents<TData, TMode>[T]
 
-export type Show<TMode extends Mode, TData, TConfig> = ValueOrFunction<
+export type Show<TData, TMode extends Mode> = ValueOrFunction<
   TData,
-  TConfig,
-  DynamicColumn<TMode, TData, TConfig>,
   TMode,
   boolean
 >
-export type Span<TMode extends Mode, TData, TConfig> = ValueOrFunction<
+export type Span<TData, TMode extends Mode> = ValueOrFunction<
   TData,
-  TConfig,
-  DynamicColumn<TMode, TData, TConfig>,
   TMode,
   RecursiveOptional<ColProps>
 >
-export type LocalFormItemProps<
-  TMode extends Mode,
+export type LocalFormItemProps<TData, TMode extends Mode> = ValueOrFunction<
   TData,
-  TConfig,
-> = ValueOrFunction<
-  TData,
-  TConfig,
-  DynamicColumn<TMode, TData, TConfig>,
   TMode,
   RecursiveOptional<FormItemProps>
 >
 
-export type DynamicColumn<TMode extends Mode, TData, TConfig> = {
+export type DynamicColumn<TData, TMode extends Mode> = {
   prop: string
-  show: Show<TMode, TData, TConfig>
-  span?: Span<TMode, TData, TConfig>
-  formItemProps?: LocalFormItemProps<TMode, TData, TConfig>
+  show: Show<TData, TMode>
+  span?: Span<TData, TMode>
+  formItemProps?: LocalFormItemProps<TData, TMode>
   component?: Component
 } & {
   [K in `${TMode}Prop`]?: string
 } & {
     [TType in InternalComponentsKey]: {
       type: TType
-      props: GetPropsType<
-        TType,
-        TData,
-        TConfig,
-        DynamicColumn<TMode, TData, TConfig>,
-        TMode
-      >
+      props: GetPropsType<TType, TData, TMode>
     } & {
       [TModeType in InternalComponentsKey]: {
         [K in `${TMode}Type`]?: TModeType
       } & {
-        [K in `${TMode}Props`]?: GetPropsType<TModeType, any, any, any, any>
+        [K in `${TMode}Props`]?: GetPropsType<TModeType, any, any>
       }
     }[InternalComponentsKey]
   }[InternalComponentsKey]
 
-export type LocalFormProps<TData, TConfig, TMode> = RecursiveOptional<
+export type LocalFormProps<TData, TMode extends Mode> = RecursiveOptional<
   Omit<FormProps, 'model' | 'disabled'>
 > & {
-  disabled?: ValueOrFunction<TData, TConfig, null, TMode, boolean>
+  disabled?: ValueOrFunction<TData, TMode, boolean>
 } & Common
 
-export type Column<
-  TData extends Record<string, any>,
-  TMode extends Mode,
-> = DynamicColumn<TMode, TData, CFormConfig<TData, TMode>>
+export type LocalRowProps = RecursiveOptional<RowProps> & Common
 
-// CFormConfig 配置对象
-export interface CFormConfig<
-  TData extends Record<string, any>,
-  TMode extends Mode,
-> {
+export type LocalColumn<TData, TMode extends Mode> = DynamicColumn<TData, TMode>
+
+export interface CFormConfig<TData, TMode extends Mode> {
   mode?: TMode
-  columns: Column<TData, TMode>[]
-  formProps?: LocalFormProps<TData, CFormConfig<TData, TMode>, TMode>
-  rowProps?: RecursiveOptional<RowProps> & Common
+  columns: LocalColumn<TData, TMode>[]
+  formProps?: LocalFormProps<TData, TMode>
+  rowProps?: LocalRowProps
 }
 
-export interface CFormProps<
-  TData extends Record<string, any>,
-  TMode extends Mode,
-> {
+export interface CFormProps<TData extends Obj, TMode extends Mode> {
   modelValue: TData
   config: CFormConfig<TData, TMode>
 }

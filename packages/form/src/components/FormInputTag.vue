@@ -3,23 +3,21 @@
   lang="ts"
   generic="TData extends Record<string, any>, TMode extends Mode"
 >
-import type { Mode } from '@comun-ui/types'
 import {
-  type FormItemComponentProps,
   useFormItemComponentProps,
+  type FormItemComponentProps,
 } from '../composables/useFormItem'
+import type { Mode } from '../types'
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
-const { currentProps } = useFormItemComponentProps<
-  TMode,
-  TData,
-  'inputTag'
->(props)
+const { currentProps } = useFormItemComponentProps<TMode, TData, 'inputTag'>(
+  props,
+)
 
 const modelValue = defineModel<any>({
   default: '',
 })
-
 </script>
+
 <template>
-  <el-input-tag v-model="modelValue" v-bind="currentProps"> </el-input-tag>
+  <el-input-tag v-model="modelValue" v-bind="currentProps" />
 </template>

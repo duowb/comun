@@ -2,19 +2,26 @@
   "name": "comun-ui",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter @comun-ui/playground dev",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint --max-warnings 0 --cache .",
+    "lint:fix": "pnpm run lint --fix",
+    "format": "prettier . --write"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "turbo": "^2.5.3",
-    "@sxzz/eslint-config": "^ 7.0.4",
-    "@sxzz/prettier-config": "^2.2.1",
-    "typescript": "^5.8.3",
-    "prettier": "^3.6.0"
+    "@sxzz/eslint-config": "catalog:cli",
+    "@sxzz/prettier-config": "catalog:cli",
+    "@typescript/native-preview": "catalog:cli",
+    "eslint": "catalog:cli",
+    "prettier": "catalog:cli",
+    "typescript": "catalog:cli",
+    "vue-tsc": "catalog:cli"
   },
   "prettier": "@sxzz/prettier-config",
   "volta": {
