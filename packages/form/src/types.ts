@@ -167,6 +167,14 @@ export type LocalRowProps = RecursiveOptional<RowProps> & Common
 export type LocalColumn<TData, TMode extends Mode> = DynamicColumn<TData, TMode>
 
 export interface CFormConfig<TData, TMode extends Mode> {
+  /**
+   * 表单模式 默认是 edit
+   *
+   * edit: 编辑模式 默认使用type/props参数进行显示，可以通过[mode]Type/[mode]Props来指定编辑模式下的组件类型和属性
+   *
+   * view: 查看模式 默认都用文本显示,可以通过[mode]Type/[mode]Props来指定查看模式下的组件类型和属性
+   *
+   */
   mode?: TMode
   columns: LocalColumn<TData, TMode>[]
   formProps?: LocalFormProps<TData, TMode>

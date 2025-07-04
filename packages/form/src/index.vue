@@ -117,9 +117,24 @@ function getFormItemProps(column: LocalColumn<TData, TMode>) {
   return callFunction(column.formItemProps, column)
 }
 
+/**
+ * 如果 currentMode = view,默认将所有的type转换成text,如果type是component,则使用column.component
+ * @param column
+ */
+function getComponentType(column: LocalColumn<TData, TMode>) {
+  if (currentMode.value === 'view') {
+    if (column.type === 'component') {
+      return 'component'
+    }
+    return 'text'
+  }
+  return column.type
+}
+
 function getComponent(column: LocalColumn<TData, TMode>) {
   const currentModeType =
-    (column[`${currentMode.value}Type`] as InternalComponentsKey) || column.type
+    (column[`${currentMode.value}Type`] as InternalComponentsKey) ||
+    getComponentType(column)
   if (currentModeType !== 'component') {
     return internalComponents.value[currentModeType]
   }
@@ -150,12 +165,7 @@ const processedColumns = computed(() => {
 </script>
 
 <template>
-  <el-form
-    ref="formRef"
-    :model="formModel"
-    v-bind="formProps"
-    :class="{ 'pro-form--view': currentMode !== 'edit' }"
-  >
+  <el-form ref="formRef" :model="formModel" v-bind="formProps">
     <el-row :gutter="20" v-bind="rowProps">
       <template v-for="column in processedColumns" :key="column.prop">
         <el-col :span="24" v-bind="column.span">
