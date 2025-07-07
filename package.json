@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "pnpm --filter @comun-ui/playground dev",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint --max-warnings 0 --cache .",
+    "lint": "eslint --max-warnings 0",
     "lint:fix": "pnpm run lint --fix",
     "format": "prettier . --write"
   },

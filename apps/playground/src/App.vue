@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { Form } from '@comun-ui/form'
 import { ElMessage } from 'element-plus'
