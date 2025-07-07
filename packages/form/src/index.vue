@@ -123,10 +123,7 @@ function getFormItemProps(column: LocalColumn<TData, TMode>) {
  */
 function getComponentType(column: LocalColumn<TData, TMode>) {
   if (currentMode.value === 'view') {
-    if (column.type === 'component') {
-      return 'component'
-    }
-    return 'text'
+    return column.type === 'component' ? 'component' : 'text'
   }
   return column.type
 }
@@ -158,9 +155,14 @@ const processedColumns = computed(() => {
         span,
         formItemProps,
         component,
+        _originalType: column.type,
       }
     })
     .filter((item) => item !== false)
+})
+
+defineOptions({
+  name: 'CForm',
 })
 </script>
 

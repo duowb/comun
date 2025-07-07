@@ -8,8 +8,13 @@ import {
   type FormItemComponentProps,
 } from '../composables/useFormItem'
 import type { Mode } from '../types'
+
+defineOptions({
+  name: 'CFormNumber',
+})
+
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
-const { currentProps } = useFormItemComponentProps<TMode, TData, 'switch'>(
+const { currentProps } = useFormItemComponentProps<TMode, TData, 'number'>(
   props,
 )
 
@@ -19,5 +24,5 @@ const modelValue = defineModel<any>({
 </script>
 
 <template>
-  <el-switch v-model="modelValue" v-bind="currentProps" />
+  <el-input-number v-model="modelValue" v-bind="currentProps" />
 </template>

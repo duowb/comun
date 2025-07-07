@@ -27,9 +27,18 @@ export function useFormItemComponentProps<
   TType extends keysFormItemComponents,
 >(
   props: FormItemComponentProps<TMode, TData>,
+  /** 组件默认的props, 用来过滤 */
+  componentDefaultProps?: Obj,
 ): {
   currentMode: ComputedRef<TMode>
+  currentColumn: ComputedRef<DynamicColumn<TData, TMode>>
   currentProps: ComputedRef<
+    | (InternalComponents<TData, TMode>[TType] & {
+        disabled: boolean
+      })
+    | undefined
+  >
+  currentComponentProps: ComputedRef<
     | (InternalComponents<TData, TMode>[TType] & {
         disabled: boolean
       })
@@ -39,6 +48,8 @@ export function useFormItemComponentProps<
 } {
   const currentMode = computed(() => props.config?.mode || ('edit' as TMode))
 
+  const currentColumn = computed(() => props.column)
+
   function getDisabled(disabled?: DisabledValue<TData, TMode>) {
     if (!disabled) return false
     if (typeof disabled === 'function') {
@@ -46,7 +57,7 @@ export function useFormItemComponentProps<
         data: props.formData,
         config: props.config,
         mode: props.mode,
-        column: props.column,
+        column: currentColumn.value,
       })
     }
     return disabled
@@ -54,13 +65,13 @@ export function useFormItemComponentProps<
 
   const currentProps = computed(() => {
     const currentModeProps =
-      (props.column[`${currentMode.value}Props`] as InternalComponents<
+      (currentColumn.value[`${currentMode.value}Props`] as InternalComponents<
         TData,
         TMode
-      >[TType]) || props.column.props
+      >[TType]) || currentColumn.value.props
 
     if (!currentModeProps) return
-    delete currentModeProps.formatter
+
     return {
       ...currentModeProps,
       disabled: getDisabled(currentModeProps.disabled),
@@ -76,9 +87,28 @@ export function useFormItemComponentProps<
     return []
   })
 
+  const currentComponentProps = computed(() => {
+    const localProps = unref(currentProps.value)
+    if (!localProps) return
+    if (!componentDefaultProps) return localProps
+    return Object.keys(componentDefaultProps).reduce(
+      (acc, key) => {
+        if (key in localProps) {
+          // TODO 不仅需要过滤掉不存在的属性,还需要校验值是否复核values要求
+          acc[key as keyof typeof localProps] =
+            localProps[key as keyof typeof localProps]
+        }
+        return acc
+      },
+      {} as typeof localProps,
+    )
+  })
+
   return {
     currentMode,
+    currentColumn,
     currentProps,
     currentPropsOptions,
+    currentComponentProps,
   }
 }

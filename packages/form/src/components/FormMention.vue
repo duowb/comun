@@ -8,6 +8,10 @@ import {
   type FormItemComponentProps,
 } from '../composables/useFormItem'
 import type { Mode } from '../types'
+
+defineOptions({
+  name: 'CFormMention',
+})
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps } = useFormItemComponentProps<TMode, TData, 'mention'>(
   props,

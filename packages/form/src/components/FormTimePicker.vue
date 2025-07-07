@@ -8,6 +8,10 @@ import {
   type FormItemComponentProps,
 } from '../composables/useFormItem'
 import type { Mode } from '../types'
+
+defineOptions({
+  name: 'CFormTimePicker',
+})
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps } = useFormItemComponentProps<TMode, TData, 'timePicker'>(
   props,
@@ -19,5 +23,5 @@ const modelValue = defineModel<any>({
 </script>
 
 <template>
-  <el-rate v-model="modelValue" v-bind="currentProps" />
+  <el-time-picker v-model="modelValue" v-bind="currentProps" />
 </template>

@@ -56,7 +56,7 @@ type Common = {
 
 export type ColumnCommonProps<TData, TMode extends Mode> = {
   disabled?: DisabledValue<TData, TMode>
-  formatter?: ValueOrFunction<TData, TMode, any>
+  formatter?: (params: FormFunctionParams<TData, TMode>) => any
 } & Common
 
 type FormatterEleProps<
@@ -141,12 +141,14 @@ export type DynamicColumn<TData, TMode extends Mode> = {
   span?: Span<TData, TMode>
   formItemProps?: LocalFormItemProps<TData, TMode>
   component?: Component
+  /** 用来记录原始的type值 */
+  _originalType?: string
 } & {
   [K in `${TMode}Prop`]?: string
 } & {
     [TType in InternalComponentsKey]: {
       type: TType
-      props: GetPropsType<TType, TData, TMode>
+      props?: GetPropsType<TType, TData, TMode>
     } & {
       [TModeType in InternalComponentsKey]: {
         [K in `${TMode}Type`]?: TModeType

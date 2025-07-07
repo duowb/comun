@@ -9,6 +9,10 @@ import {
   type FormItemComponentProps,
 } from '../composables/useFormItem'
 import type { Mode } from '../types'
+
+defineOptions({
+  name: 'CFormCheckbox',
+})
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps, currentPropsOptions } = useFormItemComponentProps<
   TMode,

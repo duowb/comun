@@ -8,7 +8,11 @@ import {
   useFormItemComponentProps,
   type FormItemComponentProps,
 } from '../composables/useFormItem'
-import type { Mode } from '@comun-ui/types'
+import type { Mode } from '../types'
+
+defineOptions({
+  name: 'CFormSelect',
+})
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps, currentPropsOptions } = useFormItemComponentProps<
   TMode,
