@@ -3,12 +3,14 @@ packages:
   - 'packages/*'
 
 catalog:
-  '@tsconfig/node22': ^22.0.2
-  '@types/node': ^22.15.32
+  '@tsconfig/node24': ^24.0.1
+  '@types/node': ^24.0.10
   '@vitejs/plugin-vue': ^6.0.0
   '@vue/tsconfig': ^0.7.0
   npm-run-all2: ^8.0.4
   vite-plugin-vue-devtools: ^7.7.7
+  unplugin-unused: ^0.5.1
+  unplugin-vue: ^6.2.0
 catalogs:
   cli:
     '@sxzz/eslint-config': ^7.0.4
@@ -19,6 +21,7 @@ catalogs:
     typescript: ~5.8.3
     vite: ^7.0.0
     vue-tsc: ^3.0.1
+    tsdown: ^0.12.9
   components:
     element-plus: ^2.7.4
     vue: ^3.5.17

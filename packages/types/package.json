@@ -1,14 +1,44 @@
 {
   "name": "@comun-ui/types",
   "version": "0.0.0",
-  "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "type": "module",
+  "files": [
+    "*.d.ts",
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "dev": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": "./*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": "./dist/index.js",
+      "./*": "./*"
+    }
+  },
   "peerDependencies": {
     "element-plus": "catalog:components",
     "vue": "catalog:components"
   },
   "volta": {
     "extends": "../../package.json"
+  },
+  "engines": {
+    "node": ">=18.20.0"
   }
 }

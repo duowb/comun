@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter @comun-ui/playground dev",
+    "build": "set DEBUG=* && pnpm run --filter=\"./packages/*\" --parallel build && tsdown",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint --max-warnings 0",
     "lint:fix": "pnpm run lint --fix",
@@ -17,14 +18,19 @@
   "devDependencies": {
     "@sxzz/eslint-config": "catalog:cli",
     "@sxzz/prettier-config": "catalog:cli",
+    "@tsconfig/node24": "catalog:",
+    "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:cli",
     "eslint": "catalog:cli",
     "prettier": "catalog:cli",
+    "tsdown": "catalog:cli",
     "typescript": "catalog:cli",
+    "unplugin-unused": "catalog:",
+    "unplugin-vue": "catalog:",
     "vue-tsc": "catalog:cli"
   },
   "prettier": "@sxzz/prettier-config",
   "volta": {
-    "node": "20.18.0"
+    "node": "20.19.1"
   }
 }

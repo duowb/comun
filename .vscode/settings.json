@@ -1,10 +1,14 @@
 {
   "cSpell.words": [
     "comun",
+    "rolldown",
     "sxzz",
+    "tsdown",
     "unocss",
+    "unplugin",
     "unref",
-    "vite"
+    "vite",
+    "vitejs"
   ],
   "cSpell.ignorePaths": ["pnpm-lock.yaml"],
   "typescript.tsdk": "node_modules/typescript/lib",
