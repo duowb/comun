@@ -2,6 +2,7 @@
 import { Form } from '@comun-ui/form'
 import { ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
+import FormButton from './components/FormButton.vue'
 import type { CFormConfig, LocalColumn } from '@comun-ui/form'
 import type { FormInstance, FormItemRule } from 'element-plus'
 
@@ -15,6 +16,7 @@ interface BasicFormData {
   isUrgent: boolean
   reviewComment: string
   priority: 'low' | 'medium' | 'high'
+  buttons: string
 }
 
 const basicFormRef = ref<FormInstance>()
@@ -29,6 +31,7 @@ const basicFormData = reactive<BasicFormData>({
   isUrgent: true,
   reviewComment: '',
   priority: 'high',
+  buttons: '112233',
 })
 
 const basicFormRules: Record<keyof BasicFormData, FormItemRule[]> = {
@@ -58,6 +61,7 @@ const basicConfig = ref<CFormConfig<BasicFormData, Mode>>({
     {
       show: true,
       type: 'input',
+      viewType: 'input',
       prop: 'taskName',
       span: { span: 12 },
       formItemProps: ({ mode }) => ({
@@ -127,9 +131,17 @@ const basicConfig = ref<CFormConfig<BasicFormData, Mode>>({
       },
     },
     {
+      show: true,
+      type: 'component',
+      component: FormButton,
+      prop: 'buttons',
+      span: { span: 12 },
+    },
+    {
       show: ({ mode, data }) =>
         mode === 'review' || (mode === 'edit' && data.isUrgent),
       type: 'input',
+      reviewType: 'text',
       prop: 'reviewComment',
       span: { span: 24 },
       formItemProps: ({ mode }) => ({
@@ -142,6 +154,7 @@ const basicConfig = ref<CFormConfig<BasicFormData, Mode>>({
         showWordLimit: true,
         maxlength: 200,
       },
+      reviewProps: {},
     },
   ],
 })
@@ -397,7 +410,7 @@ const updateDynamicConfig = () => {
     })
   }
 
-  dynamicConfig.value.columns = [...baseColumns, ...dynamicColumns]
+  dynamicConfig.value.columns = baseColumns.concat(dynamicColumns)
 }
 
 const addDynamicField = () => {

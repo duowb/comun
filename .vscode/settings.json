@@ -3,6 +3,7 @@
     "comun",
     "sxzz",
     "unocss",
+    "unref",
     "vite"
   ],
   "cSpell.ignorePaths": ["pnpm-lock.yaml"],
