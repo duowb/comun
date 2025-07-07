@@ -34,7 +34,7 @@ const basicFormData = reactive<BasicFormData>({
   buttons: '112233',
 })
 
-const basicFormRules: Record<keyof BasicFormData, FormItemRule[]> = {
+const basicFormRules: Record<string, FormItemRule[]> = {
   taskName: [{ required: true, message: '任务名称不能为空', trigger: 'blur' }],
   assignee: [{ required: true, message: '必须指定负责人', trigger: 'change' }],
   reviewComment: [
