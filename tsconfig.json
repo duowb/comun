@@ -3,7 +3,7 @@
     "composite": true,
     "target": "ESNext",
     "lib": ["ES2023"],
-    "customConditions": ["vine"],
+    "customConditions": ["development"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "types": ["node"],
