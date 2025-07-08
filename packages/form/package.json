@@ -11,11 +11,11 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "dev": "./src/index.ts",
+      "development": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./types": {
-      "dev": "./src/types.ts",
+      "development": "./src/types.ts",
       "default": "./dist/types.js"
     },
     "./*": "./*"

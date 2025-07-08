@@ -10,6 +10,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter @comun-ui/playground dev",
+    "dev:pkg": "tsdown --watch",
     "build": "pnpm run --filter=\"./packages/*\" --parallel build && tsdown",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint --max-warnings 0",

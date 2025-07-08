@@ -23,7 +23,7 @@ export default defineConfig({
   },
   report: false,
   exports: {
-    devExports: 'dev',
+    devExports: 'development',
     all: true,
     async customExports(exports, { outDir }) {
       const hasRootDts = (await readdir(path.dirname(outDir))).some((file) =>

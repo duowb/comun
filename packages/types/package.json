@@ -11,7 +11,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "dev": "./src/index.ts",
+      "development": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./*": "./*"

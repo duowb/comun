@@ -155,7 +155,6 @@ const basicConfig = ref<CFormConfig<BasicFormData, Mode>>({
         showWordLimit: true,
         maxlength: 200,
       },
-      reviewProps: {},
     },
   ],
 })
