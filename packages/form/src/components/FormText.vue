@@ -22,6 +22,16 @@ const modelValue = defineModel<any>({
   default: '',
 })
 
+const isTextArea = computed(() => {
+  if (currentColumn.value._originalType !== 'input') {
+    return false
+  }
+  return (
+    (currentProps.value as InternalComponents<TData, TMode>['input'])?.type ===
+    'textarea'
+  )
+})
+
 function defaultFormatter() {
   if (!currentProps.value) {
     return modelValue.value
@@ -59,7 +69,8 @@ const localValue = computed(() => {
 </script>
 
 <template>
-  <el-text v-bind="currentComponentProps">
+  <el-text v-if="!isTextArea" v-bind="currentComponentProps">
     {{ localValue }}
   </el-text>
+  <el-input v-else v-model="localValue" v-bind="currentProps" readonly />
 </template>

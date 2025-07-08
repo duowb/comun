@@ -30,14 +30,18 @@ export function useFormItemComponentProps<
   /** 组件默认的props, 用来过滤 */
   componentDefaultProps?: Obj,
 ): {
+  /** 当前模式，默认是 edit */
   currentMode: ComputedRef<TMode>
+  /** 当前列对象 */
   currentColumn: ComputedRef<DynamicColumn<TData, TMode>>
+  /** 传入的所有props值 */
   currentProps: ComputedRef<
     | (InternalComponents<TData, TMode>[TType] & {
         disabled: boolean
       })
     | undefined
   >
+  /** 当前组件过滤后的props值 */
   currentComponentProps: ComputedRef<
     | (InternalComponents<TData, TMode>[TType] & {
         disabled: boolean
