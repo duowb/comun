@@ -1,6 +1,7 @@
 {
   "name": "comun-ui",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "private": true,
   "description": "",
   "type": "module",
   "keywords": [],
@@ -9,11 +10,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter @comun-ui/playground dev",
-    "build": "set DEBUG=* && pnpm run --filter=\"./packages/*\" --parallel build && tsdown",
-    "type-check": "vue-tsc --noEmit",
+    "build": "pnpm run --filter=\"./packages/*\" --parallel build && tsdown",
+    "typecheck": "vue-tsc --noEmit",
     "lint": "eslint --max-warnings 0",
     "lint:fix": "pnpm run lint --fix",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "release": "bumpp -r"
   },
   "devDependencies": {
     "@sxzz/eslint-config": "catalog:cli",
@@ -21,6 +23,7 @@
     "@tsconfig/node24": "catalog:",
     "@types/node": "catalog:",
     "@typescript/native-preview": "catalog:cli",
+    "bumpp": "catalog:",
     "eslint": "catalog:cli",
     "prettier": "catalog:cli",
     "tsdown": "catalog:cli",

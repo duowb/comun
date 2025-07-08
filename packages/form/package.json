@@ -1,6 +1,6 @@
 {
   "name": "@comun-ui/form",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "type": "module",
   "files": [
     "*.d.ts",
