@@ -6,7 +6,7 @@
     "customConditions": ["development"],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "types": ["node", "vitest/globals"],
+    "types": ["node"],
     "allowImportingTsExtensions": true,
     "strict": true,
     "noImplicitAny": true,
