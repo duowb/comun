@@ -9,9 +9,9 @@ catalog:
   '@vue/tsconfig': ^0.7.0
   bumpp: 10.2.0
   npm-run-all2: ^8.0.4
-  vite-plugin-vue-devtools: ^7.7.7
   unplugin-unused: ^0.5.1
   unplugin-vue: ^6.2.0
+  vite-plugin-vue-devtools: ^7.7.7
 catalogs:
   cli:
     '@sxzz/eslint-config': ^7.0.4
@@ -19,14 +19,14 @@ catalogs:
     '@typescript/native-preview': latest
     eslint: ^9.30.1
     prettier: ^3.6.0
+    tsdown: ^0.12.9
     typescript: ~5.8.3
     vite: ^7.0.0
     vue-tsc: ^3.0.1
-    tsdown: ^0.12.9
   components:
     element-plus: ^2.7.4
     vue: ^3.5.17
   test:
-    vitest: ^3.2.4
     '@vue/test-utils': ^2.4.6
     jsdom: ^26.1.0
+    vitest: ^3.2.4

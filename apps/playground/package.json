@@ -2,7 +2,9 @@
   "name": "@comun-ui/playground",
   "version": "0.0.0",
   "private": true,
+  "packageManager": "pnpm@10.8.1",
   "type": "module",
+  "author": "duowb",
   "scripts": {
     "dev": "vite --host",
     "build": "run-p type-check \"build-only {@}\" --",
