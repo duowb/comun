@@ -12,21 +12,7 @@ import {
 } from 'element-plus'
 
 import { computed, shallowRef, useTemplateRef } from 'vue'
-import FormCheckbox from './components/FormCheckbox.vue'
-import FormDatePicker from './components/FormDatePicker.vue'
-import FormInput from './components/FormInput.vue'
-import FormInputTag from './components/FormInputTag.vue'
-import FormMention from './components/FormMention.vue'
-import FormNumber from './components/FormNumber.vue'
-import FormRadio from './components/FormRadio.vue'
-import FormRate from './components/FormRate.vue'
-import FormSelect from './components/FormSelect.vue'
-import FormSlider from './components/FormSlider.vue'
-import FormSwitch from './components/FormSwitch.vue'
-import FormText from './components/FormText.vue'
-import FormTimePicker from './components/FormTimePicker.vue'
-import FormTimeSelect from './components/FormTimeSelect.vue'
-import FormTreeSelect from './components/FormTreeSelect.vue'
+import { aliasComponents } from './components/index'
 import type {
   CFormProps,
   FormFunctionParams,
@@ -41,23 +27,7 @@ const formModel = defineModel<TData>({
 })
 const formRef = useTemplateRef<FormInstance>('formRef')
 
-const internalComponents = shallowRef({
-  input: FormInput,
-  select: FormSelect,
-  datePicker: FormDatePicker,
-  switch: FormSwitch,
-  checkbox: FormCheckbox,
-  radio: FormRadio,
-  text: FormText,
-  inputTag: FormInputTag,
-  mention: FormMention,
-  number: FormNumber,
-  rate: FormRate,
-  slider: FormSlider,
-  timePicker: FormTimePicker,
-  timeSelect: FormTimeSelect,
-  treeSelect: FormTreeSelect,
-})
+const internalComponents = shallowRef(aliasComponents)
 
 const currentConfig = computed(() => props.config)
 const currentMode = computed(
@@ -112,9 +82,17 @@ function getSpanProps(column: LocalColumn<TData, TMode>) {
 
 function getFormItemProps(column: LocalColumn<TData, TMode>) {
   if (typeof column.formItemProps !== 'function') {
-    return column.formItemProps
+    return {
+      prop: column.prop,
+      label: column.label,
+      ...(column.formItemProps || {}),
+    }
   }
-  return callFunction(column.formItemProps, column)
+  return {
+    prop: column.prop,
+    label: column.label,
+    ...(callFunction(column.formItemProps, column) || {}),
+  }
 }
 
 /**

@@ -3,14 +3,11 @@
   lang="ts"
   generic="TData extends Record<string, any>, TMode extends Mode"
 >
-import {
-  useFormItemComponentProps,
-  type FormItemComponentProps,
-} from '../composables/useFormItem'
-import type { Mode } from '../types'
+import { useFormItemComponentProps } from '../composables/useFormItem'
+import type { FormItemComponentProps, Mode } from '../types'
 
 defineOptions({
-  name: 'CFormNumber',
+  name: 'FormNumber',
 })
 
 const props = defineProps<FormItemComponentProps<TMode, TData>>()

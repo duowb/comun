@@ -5,14 +5,16 @@
 >
 import { textProps } from 'element-plus'
 import { computed, unref } from 'vue'
-import {
-  useFormItemComponentProps,
-  type FormItemComponentProps,
-} from '../composables/useFormItem'
-import type { BaseOption, InternalComponents, Mode } from '../types'
+import { useFormItemComponentProps } from '../composables/useFormItem'
+import type {
+  BaseOption,
+  FormItemComponentProps,
+  InternalComponents,
+  Mode,
+} from '../types'
 
 defineOptions({
-  name: 'CFormText',
+  name: 'FormText',
 })
 const props = defineProps<FormItemComponentProps<TMode, TData>>()
 const { currentProps, currentColumn, currentComponentProps } =

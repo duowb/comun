@@ -1,25 +1,15 @@
 import { computed, unref } from 'vue'
 import type {
   BaseOption,
-  CFormConfig,
   DisabledValue,
   DynamicColumn,
+  FormItemComponentProps,
   InternalComponents,
-  InternalComponentsKey,
+  keysFormItemComponents,
   Mode,
 } from '../types'
 import type { Obj } from '@comun-ui/types'
 import type { ComputedRef } from 'vue'
-
-export type FormItemComponentProps<TMode extends Mode, TData extends Obj> = {
-  modelValue: any
-  mode: TMode
-  config: CFormConfig<TData, TMode>
-  column: DynamicColumn<TData, TMode>
-  formData: TData
-}
-
-type keysFormItemComponents = Exclude<InternalComponentsKey, 'component'>
 
 export function useFormItemComponentProps<
   TMode extends Mode,

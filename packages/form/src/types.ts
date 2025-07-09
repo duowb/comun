@@ -137,7 +137,9 @@ export type LocalFormItemProps<TData, TMode extends Mode> = ValueOrFunction<
 
 export type DynamicColumn<TData, TMode extends Mode> = {
   prop: string
-  show: Show<TData, TMode>
+  label?: string
+  /** 是否显示, 默认是 true */
+  show?: Show<TData, TMode>
   span?: Span<TData, TMode>
   formItemProps?: LocalFormItemProps<TData, TMode>
   component?: Component
@@ -187,3 +189,13 @@ export interface CFormProps<TData extends Obj, TMode extends Mode> {
   modelValue: TData
   config: CFormConfig<TData, TMode>
 }
+
+export type FormItemComponentProps<TMode extends Mode, TData extends Obj> = {
+  modelValue: any
+  mode: TMode
+  config: CFormConfig<TData, TMode>
+  column: DynamicColumn<TData, TMode>
+  formData: TData
+}
+
+export type keysFormItemComponents = Exclude<InternalComponentsKey, 'component'>
