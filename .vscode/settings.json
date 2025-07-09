@@ -3,6 +3,7 @@
     "bumpp",
     "changelogithub",
     "comun",
+    "jsdom",
     "rolldown",
     "sxzz",
     "tsdown",
@@ -10,7 +11,8 @@
     "unplugin",
     "unref",
     "vite",
-    "vitejs"
+    "vitejs",
+    "vitest"
   ],
   "cSpell.ignorePaths": ["pnpm-lock.yaml"],
   "typescript.tsdk": "node_modules/typescript/lib",

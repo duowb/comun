@@ -36,13 +36,21 @@
       "./*": "./*"
     }
   },
-  "scripts": {},
+  "scripts": {
+    "test": "vitest"
+  },
   "peerDependencies": {
     "element-plus": "catalog:components",
     "vue": "catalog:components"
   },
   "dependencies": {
     "@comun-ui/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "catalog:",
+    "@vue/test-utils": "catalog:test",
+    "jsdom": "catalog:test",
+    "vitest": "catalog:test"
   },
   "volta": {
     "extends": "../../package.json"

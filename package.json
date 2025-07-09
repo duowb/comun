@@ -16,7 +16,8 @@
     "lint": "eslint --max-warnings 0",
     "lint:fix": "pnpm run lint --fix",
     "format": "prettier . --write",
-    "release": "bumpp -r"
+    "release": "bumpp -r",
+    "test:all": "pnpm run --filter=\"./packages/*\" --parallel test"
   },
   "devDependencies": {
     "@sxzz/eslint-config": "catalog:cli",
